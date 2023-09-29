@@ -1,0 +1,122 @@
+{% include "base.html" %}
+
+
+{% load static %}
+
+
+{% block content %}
+
+
+<main class="pt-5">
+    
+    <div class="container">
+      
+      <h1 class="h5"> Shopping cart </h1>
+
+	<hr>
+       {% for item in cart %}
+      <br>
+     
+      <div class="row mb-4 border product-item">
+        
+        <div class="col-md-3 col-lg-2 order-md-first bg-light">
+        
+            <img class="img-fluid mx-auto d-block" width="200px" alt="Responsive image" src="{{item.book.image.url}}"> <!-- Product image -->
+        
+        </div>
+
+        
+        <div class="col-md-9 col-lg-10 ps-md-3 ps-lg-10">
+          
+          <a href="{% url "store:detail" item.book.slug %}" class="text-decoration-none text-reset"> <!-- Product get absolute url -->
+          
+            <h1 class="h5 pt-2"> {{item.book.name}}</h1>
+          
+          </a>
+          
+          <div class="border">
+            
+            <div class="col border-bottom">
+              
+                <div class="row p-3">
+              
+                <div class="col-6"> Book ({{item.book.category}}) </div>
+              
+                <div class="col-6 text-end"><span class="h6 fw-bold">$ {{item.sum}} </span></div>
+            
+              </div>
+            
+            </div>
+            
+            <div class="col">
+              
+              <div class="row p-3">
+                
+                <div class="col-12">
+                  
+                  <label for="select">{{item.quantity}}</label>
+
+                  &nbsp; 
+                  
+                  <form method="post" action="{% url "cart:update"  item.book.id%}">
+                  {% csrf_token %}
+                  <select name="quantity">
+                  <option value="{{ item.qty }}" selected>{{ item.qty }}</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  </select>
+    
+                  
+                  
+                  <br> <br>
+
+                  <button type="button" id="update-button"
+                    class="btn btn-primary btn-sm update-button">
+                   <input type="submit" value="Update">
+                  
+                  </button>
+                  
+                  &nbsp;
+                  <a href="{% url "cart:delete-cart" item.book.id%}">
+                  <button type="button" id="delete-button"
+                    class="btn btn-danger btn-sm delete-button">
+                    Delete
+        
+                  </button>
+
+                  </a>
+                  </form>
+        
+
+                </div>
+               
+            </div>
+        
+            </div>
+    
+            </div>
+     
+        </div>
+      
+    </div>
+      {% endfor %}
+
+
+      <div class="col-12 text-end">
+ 
+        <div class="h6 fw-bold"> Sub total: {{cart.total_sum}}$ <div id="total" class="d-inline-flex"> <!-- cart.get_total --> </div></div>
+ 
+      </div>
+ 
+
+    </div>
+  
+
+ </main>
+
+
+
+{% endblock %}
+

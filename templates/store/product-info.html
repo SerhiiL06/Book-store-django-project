@@ -1,0 +1,132 @@
+
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+
+    <main class="pt-5">
+
+        <div class="row g-3">
+
+            <div class="col-md-5 col-lg-5 order-md-first bg-light">
+            
+                <img class="img-fluid mx-auto d-block" alt="Responsive image" src="{{object.image.url}}"> 
+            
+            </div>
+
+            <div class="col-md-7 col-lg-7 ps-md-3 ps-lg-5">
+
+                <h1 class="mb-0 h4"> {{object.name}} </h1>
+
+                <strong> {{object.category}} </strong>
+
+
+                <hr>
+
+                <br>
+
+
+                <p> {{object.discription}} </p>
+
+                <div class="border">
+
+                    <div class="col border-bottom">
+
+                        <div class="row p-3">
+
+                            <div class="col-6"> Price </div>
+
+                            <div class="col-6 text-end"><span class="h4 fw-bold">$ {{object.price}}</span></div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col">
+              
+                        <div class="row p-3">
+              
+                            <div class="col-6">
+              
+                               
+                               
+                                
+                                &nbsp; 
+                              <form action="{% url 'cart:add-cart' object.id %}" method="post">
+                                {% csrf_token %}
+                                <div class="col-6">
+                                <label for="select">Qty</label>
+                                <select name="quantity" id="select">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                </select>
+                                </div>
+                                <div class="col-6 text-end">
+                                 <button type="submit" id="add-button" class="btn btn-secondary btn-sm">
+                                         Add to cart
+                                 </button>
+                                 </div>
+                                </form>
+
+
+                            </div>
+                        
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <br>
+
+</div>
+
+<script>
+
+    $(document).on('click', '#add-button', function(e){
+
+        e.preventDefault();
+
+        $.ajax({
+
+            type: "POST",
+            url: "{%url 'cart:add-cart' object.id%}",
+            data: {
+
+                object_id: $('add-button').val(),
+                book_quantity: $('#select option:selected').text(), 
+                csrfmiddlewaretoken: {{csrf_token }}, 
+                action: 'post'
+            },
+
+            success: function(json){
+
+            },
+
+            error: function(hrm, errmsg, err){
+
+                
+            }
+        });
+
+
+
+
+        )
+
+    }
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{% autoescape off %}
+
+Hi,
+
+Thank you for registering on our website.
+
+Please be so kind as to verify your email by clicking the link below:
+
+    {% if email_object.is_valid %}
+    <a href="{% url "users:success-message" email_user.email%}"><button>Verify</button></a>
+    {% else %}
+     <a href="{% url "users:failed-message" %}"><button>Verify</button></a>
+    {% endif %}
+
+
+{% endautoescape %}
