@@ -37,3 +37,12 @@ class LoginForm(AuthenticationForm):
     class Meta:
         model = User
         fields = ["email", "password"]
+
+
+class SendPasswordEmailForm(forms.Form):
+    email = forms.EmailField(
+        widget=forms.EmailInput(attrs={"plaseholder": "example@test.com"})
+    )
+
+    class Meta:
+        fields = ["email"]

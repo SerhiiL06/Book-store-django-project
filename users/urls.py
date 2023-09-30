@@ -20,4 +20,10 @@ urlpatterns = [
         name="success-message",
     ),
     path("failed-message/", views.EmailFailedView.as_view(), name="failed-message"),
+    path("password-reset/", views.PasswordResetEmailView.as_view(), name="reset"),
+    path(
+        "password-reset-sent",
+        views.PasswordResetSentView.as_view(),
+        name="reset-password",
+    ),
 ]

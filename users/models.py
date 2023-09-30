@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 from .managers import CustomUserManager
 from base import settings
+from django.core.mail import send_mail
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 
 from django.core.mail import send_mail
@@ -38,6 +39,17 @@ class User(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = "user"
         verbose_name_plural = "users"
+
+    def send_reset_mail(self):
+        subject = f"Reset password for {self.first_name}"
+        message = f"Click here if you want reset your password {self.email}"
+        send_mail(
+            subject=subject,
+            message=message,
+            from_email="test@gmail.com",
+            recipient_list=[self.email],
+            fail_silently=True,
+        )
 
     def is_auntheticated(self):
         return True
