@@ -50,9 +50,15 @@
                         <div class="row p-3">
               
                             <div class="col-6">
+                            
               
-                               
-                               
+                              <form action="{% url "store:add" object.id%}">
+                                {% csrf_token %}
+                                <input type"hidden">
+                                <button>Add to fav</button>
+                              </form> 
+                            
+                                
                                 
                                 &nbsp; 
                               <form action="{% url 'cart:add-cart' object.id %}" method="post">
